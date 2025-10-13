@@ -175,6 +175,7 @@ requires-dist = [
     { name = "pydantic", specifier = ">=2.11.7" },
     { name = "pyjwt", specifier = ">=2.10.1" },
 ]
+provides-extras = ["organisations"]
 
 [package.metadata.requires-dev]
 dev = [

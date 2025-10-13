@@ -49,7 +49,7 @@ class ChargeAmpsExternalClient(ChargeAmpsClient):
         self._refresh_token = None
         self._token_skew = 30
         self._token_lock = asyncio.Lock()
-        self._user: User = None
+        self._user: User | None = None
 
     async def shutdown(self) -> None:
         if self._owns_client:

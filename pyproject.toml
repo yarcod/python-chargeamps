@@ -36,6 +36,9 @@ chargeamps = "chargeamps.cli:main"
 repository = "https://github.com/kirei/python-chargeamps.git"
 issues = "https://github.com/kirei/python-chargeamps/issues"
 
+[project.optional-dependencies]
+organisations = []
+
 [dependency-groups]
 dev = [
     "pytest>=8.4.2",
