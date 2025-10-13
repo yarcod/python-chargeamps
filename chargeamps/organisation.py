@@ -62,7 +62,8 @@ class OrganisationClient(ChargeAmpsExternalClient):
         return [ChargePointStatus.model_validate(cp) for cp in payload]
 
     def is_valid_hex(self, rfid: str) -> bool:
-        return len(rfid) % 2 == 0 and all(char in "0123456789ABCDEF" for char in rfid)
+        r = rfid.upper()
+        return len(r) % 2 == 0 and all(ch in "0123456789ABCDEF" for ch in r)
 
     def verify_rfid_length(self, rfid: str, length: int | None = None) -> int:
         length_in_bytes = len(rfid) // 2
@@ -255,7 +256,7 @@ class OrganisationClient(ChargeAmpsExternalClient):
         rfid: bool = False,
         rfid_dec_format_length: int | None = None,
     ) -> User:
-        """Get organisation's registered users"""
+        """Get organisation user"""
         query_params = {}
         if rfid_dec_format_length:
             query_params["rfidDecimalFormatLength"] = rfid_dec_format_length

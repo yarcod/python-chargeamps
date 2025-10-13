@@ -112,7 +112,7 @@ class ChargeAmpsExternalClient(ChargeAmpsClient):
 
         response_payload = response.json()
         self._token = response_payload["token"]
-        self._user = response_payload["user"]
+        self._user = User.model_validate(response_payload["user"])
         self._refresh_token = response_payload.get("refreshToken", self._refresh_token)
         token_payload = jwt.decode(self._token, options={"verify_signature": False})
         self._token_expire = int(token_payload.get("exp", 0))
@@ -262,13 +262,6 @@ class ChargeAmpsExternalClient(ChargeAmpsClient):
 
     async def get_logged_in_user(self) -> User:
         """Get authenticated user info"""
-        if not self._user or not isinstance(self._user, dict):
+        if self._user is None:
             raise ValueError("No user is currently logged in")
-
-        user_id = self._user["id"]
-
-        request_uri = f"/api/{API_VERSION}/users/{user_id}"
-        response = await self._get(request_uri)
-        payload = await response.json()
-
-        return User.model_validate(payload)
+        return self._user
