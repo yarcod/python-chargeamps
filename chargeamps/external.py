@@ -112,7 +112,9 @@ class ChargeAmpsExternalClient(ChargeAmpsClient):
 
         response_payload = response.json()
         self._token = response_payload["token"]
-        self._user = User.model_validate(response_payload["user"])
+        user_payload = response_payload.get("user")
+        if user_payload is not None:
+            self._user = User.model_validate(user_payload)
         self._refresh_token = response_payload.get("refreshToken", self._refresh_token)
         token_payload = jwt.decode(self._token, options={"verify_signature": False})
         self._token_expire = int(token_payload.get("exp", 0))
