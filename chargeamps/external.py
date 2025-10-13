@@ -239,7 +239,7 @@ class ChargeAmpsExternalClient(ChargeAmpsClient):
         """Get partner details"""
         request_uri = f"/api/{API_VERSION}/chargepoints/{charge_point_id}/partner"
         response = await self._get(request_uri)
-        payload = await response.json()
+        payload = response.json()
         return Partner.model_validate(payload)
 
     async def remote_start(
